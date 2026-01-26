@@ -59,7 +59,7 @@ class MyTheme {
         color: Color(0xFF1C1C1C),
       ),
       titleMedium: TextStyle(
-        fontSize: 18,
+        fontSize: 22,
         fontWeight: FontWeight.w600,
         color: Color(0xFF1C1C1C),
       ),

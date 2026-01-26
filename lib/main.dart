@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:task2/colortheme.dart';
-import 'package:task2/screens/homepage.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:task2/screens/splash_screen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+ await Hive.initFlutter();
+
+ var box= await Hive.openBox('mybox');
+
   runApp(const MyApp());
 }
 
@@ -15,6 +21,11 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   bool isDarkTheme = false;
+    void onThemeToggle () {
+          setState(() {
+            isDarkTheme = !isDarkTheme;
+          });
+        }
 
   @override
   Widget build(BuildContext context) {
@@ -24,12 +35,9 @@ class _MyAppState extends State<MyApp> {
       theme: MyTheme.lightTheme,
       darkTheme: MyTheme.darkTheme,
       themeMode: isDarkTheme ? ThemeMode.dark : ThemeMode.light,
-      home: Homepage(
-        onThemeToggle: () {
-          setState(() {
-            isDarkTheme = !isDarkTheme;
-          });
-        },
+      home: SplashScreen(
+        onThemeToggle: onThemeToggle,
+       
       ),
     );
   }

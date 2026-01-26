@@ -1,23 +1,75 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:task2/data/database.dart';
+import 'package:task2/util/dialog_box.dart';
 import 'package:task2/util/todo_tile.dart';
 class Homepage extends StatefulWidget {
   final VoidCallback onThemeToggle;
-  const Homepage({super.key,required this.onThemeToggle});
+  
+   const Homepage({super.key, required this.onThemeToggle});
 
   @override
   State<Homepage> createState() => _HomepageState();
 }
 
 class _HomepageState extends State<Homepage> {
-  List todolist=[
-    ["Code",false],
-    ["Study DSA",false]
-  ];
+
+  final _mybox=Hive.box('mybox');
+
+  final _controller=TextEditingController();
+
+void savenewtask(){
+  setState(() {
+    db.todolist.add([_controller.text,false]);
+    _controller.clear();
+  });
+  Navigator.of(context).pop();
+}
+
+ void canceltask(){
+  _controller.clear();
+  Navigator.of(context).pop();
+
+ }
+
+ Database db=Database();
+ @override
+ void initState(){
+  if(_mybox.get('todolist')==null){
+    db.createIntialData();
+  }
+  else{
+    db.loadData();
+  }
+  super.initState();
+ }
+
+  // List todolist=[
+  //   ["Code",false],
+  //   ["Study DSA",false]
+  // ];
   void checkBoxChanged(bool? value,int index){
     setState(() {
-      todolist[index][1]=!todolist[index][1];
+      db.todolist[index][1]=!db.todolist[index][1];
     });
   }
+
+  void addtask(){
+    showDialog(context: context,
+     builder: (context){
+       return DialogBox(
+        controller: _controller,
+        onSave: savenewtask,
+        oncancel: canceltask,
+       );
+     });
+  }
+   void delete(int index){
+    setState(() {
+      db.todolist.removeAt(index);
+    });
+    db.updateDatabase();
+   }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,13 +82,18 @@ class _HomepageState extends State<Homepage> {
         ],
         backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
       ),
+      floatingActionButton: FloatingActionButton(onPressed: addtask,
+      child:Icon(Icons.add)),
+
       body:ListView.builder(
-        itemCount: todolist.length,
+        itemCount: db.todolist.length,
         itemBuilder: (context,index){
           return TodoTile(
-            iscompleted: todolist[index][1],
+            iscompleted: db.todolist[index][1],
            onChanged:(value)=> checkBoxChanged(value,index),
-            taskname: todolist[index][0]);
+            taskname: db.todolist[index][0],
+            deletetask: (context) =>delete(index) ,);
+            
         },
         
       ) ,
