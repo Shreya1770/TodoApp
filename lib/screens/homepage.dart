@@ -61,6 +61,7 @@ void savenewtask(){
         controller: _controller,
         onSave: savenewtask,
         oncancel: canceltask,
+         heading: 'Add a new task',
        );
      });
   }
@@ -70,6 +71,33 @@ void savenewtask(){
     });
     db.updateDatabase();
    }
+   void saveEditedTask(int index) {
+  setState(() {
+    db.todolist[index][0] = _controller.text;
+  });
+  _controller.clear();
+  db.updateDatabase();
+  Navigator.of(context).pop();
+}
+
+
+  void edit(int index) {
+  _controller.text = db.todolist[index][0];
+
+  showDialog(
+    context: context,
+    builder: (context) {
+      return DialogBox(
+        heading: 'Edit task',
+        controller: _controller,
+        onSave: () => saveEditedTask(index),
+        oncancel: canceltask,
+      );
+    },
+  );
+}
+
+   
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,7 +120,8 @@ void savenewtask(){
             iscompleted: db.todolist[index][1],
            onChanged:(value)=> checkBoxChanged(value,index),
             taskname: db.todolist[index][0],
-            deletetask: (context) =>delete(index) ,);
+            deletetask: (context) =>delete(index) ,
+            edittask: (context)=>edit(index),);
             
         },
         

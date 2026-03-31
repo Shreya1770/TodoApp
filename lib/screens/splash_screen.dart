@@ -14,7 +14,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   @override
-  void init(){
+  void initState(){
     super.initState();
     Timer(Duration(seconds: 3),(){
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Homepage(onThemeToggle: widget.onThemeToggle)));
@@ -22,7 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:  const Color.fromARGB(255, 225, 218, 218),
+      backgroundColor: const Color.fromARGB(255, 253, 251, 251),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

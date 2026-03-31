@@ -3,10 +3,12 @@ import 'package:task2/util/my_buttons.dart';
 
 class DialogBox extends StatelessWidget {
   final controller;
+  final String heading;
   VoidCallback onSave;
   VoidCallback oncancel;
   
    DialogBox({super.key,
+   required this.heading,
    required this.controller,
   required this.onSave,
   required this.oncancel});
@@ -23,7 +25,7 @@ class DialogBox extends StatelessWidget {
               controller: controller,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
-                hintText: "Add a new task",
+                hintText: heading,
               ),
             ),
             Row(
