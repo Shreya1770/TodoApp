@@ -36,6 +36,10 @@ class TodoTile extends StatelessWidget {
           ]
          ),
         child: Container(
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.background,
+            borderRadius: BorderRadius.circular(12)
+          ),
           child: Padding(
             padding: const EdgeInsets.all(24.0),
             child: Row(
@@ -51,10 +55,6 @@ class TodoTile extends StatelessWidget {
               ],
               
             ),
-          ),
-          decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.background,
-            borderRadius: BorderRadius.circular(12)
           ),
         ),
       ),

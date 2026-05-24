@@ -2,7 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:task2/screens/homepage.dart';
+
+import 'package:task2/services/signup_page.dart';
 
 class SplashScreen extends StatefulWidget {
   final VoidCallback onThemeToggle;
@@ -17,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState(){
     super.initState();
     Timer(Duration(seconds: 3),(){
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Homepage(onThemeToggle: widget.onThemeToggle)));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>SignUp(onThemeToggle: widget.onThemeToggle)));
     });
   }
   Widget build(BuildContext context) {

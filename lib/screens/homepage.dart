@@ -23,6 +23,7 @@ void savenewtask(){
     db.todolist.add([_controller.text,false]);
     _controller.clear();
   });
+  db.updateDatabase();
   Navigator.of(context).pop();
 }
 
